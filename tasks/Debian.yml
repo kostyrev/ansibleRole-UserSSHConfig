@@ -1,0 +1,8 @@
+---
+- name: Debian | create .ssh/config per user
+  template: >
+   src=Debian/config.j2
+   dest="{{item.user_home}}{{item.user}}/.ssh/config"
+   owner={{item.user}} group={{item.user}} mode=0400
+  with_items: user_ssh_config
+  when: user_ssh_config

@@ -1,0 +1,13 @@
+# {{ ansible_managed }}
+
+{% for host in item.hosts %}
+Host {{host.alias}}
+{% for key, value in host.iteritems() recursive %}
+{% if key == "IdentityFile" %}
+     {{key}} {{item.user_home}}{{item.user}}/.ssh/{{value}}
+{% elif key != "alias" %}
+     {{key}} {{value}}
+{% endif %}
+{% endfor %}
+
+{% endfor %}

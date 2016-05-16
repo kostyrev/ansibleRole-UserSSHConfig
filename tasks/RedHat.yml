@@ -1,0 +1,16 @@
+---
+
+- name: manage .ssh dir
+  file: path="{{ item.user_home }}/.ssh" state=directory mode=0700
+  with_items: user_ssh_config
+  when: user_ssh_config
+  tags: user-ssh-config
+
+- name: RedHat | create .ssh/config per user
+  template: >
+   src=Debian/config.j2
+   dest="{{item.user_home}}/{{item.user}}/.ssh/config"
+   owner={{item.user}} group={{item.user}} mode=0600
+  with_items: user_ssh_config
+  when: user_ssh_config
+  tags: user-ssh-config
